@@ -1,0 +1,39 @@
+services:
+  test:
+    build: .
+    image: test:latest
+    container_name: test
+    ports:
+      - "8080:8080"
+    environment:
+      DB_NAME: ${DB_NAME}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_PORT: ${DB_PORT}
+      DB_HOST: ${DB_HOST}
+      TEST_PORT: ${TEST_PORT}
+    depends_on:
+      - postgres
+    networks:
+      - test
+
+  postgres:
+    image: postgres:13.3-alpine
+    container_name: postgres
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - test
+
+volumes:
+  postgres_data:
+
+networks:
+  test:
+    driver: bridge

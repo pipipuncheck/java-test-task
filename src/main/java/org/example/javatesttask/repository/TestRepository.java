@@ -1,0 +1,11 @@
+package org.example.javatesttask.repository;
+
+import org.example.javatesttask.model.Number;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.UUID;
+
+@Repository
+public interface TestRepository extends JpaRepository<Number, UUID> {
+}
